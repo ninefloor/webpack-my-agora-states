@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Discussion } from "./Discussion";
 
 export const Discussions = ({ discussions, deleteDiscussion }) => {

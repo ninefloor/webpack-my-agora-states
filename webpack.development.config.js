@@ -1,12 +1,19 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const path = require("path");
+const ESLintWebpackPlugin = require("eslint-webpack-plugin");
 
 module.exports = {
+  mode: 'development',
   entry: "./src/index.js",
   output: {
     path: path.join(__dirname, "dist"),
     filename: '[name].js',
     clean: true,
+  },
+  devServer:{
+    static: './dist',
   },
   module: {
     rules: [
@@ -19,14 +26,20 @@ module.exports = {
       },
       {
         test: /.s?css$/,
-        use: ["css-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
         exclude: /node_modules/,
       }
     ]
+  },
+  optimization: {
+    minimizer: [new CssMinimizerPlugin()],
+    runtimeChunk: 'single',
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "./public/index.html"),
     }),
+    new MiniCssExtractPlugin(),
+    new ESLintWebpackPlugin(),
   ]
 }

@@ -1,3 +1,5 @@
+import React from "react";
+
 export const Form = ({ addDiscussion }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
